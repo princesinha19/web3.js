@@ -27,6 +27,7 @@ export default class TransactionObserver {
      * @param {GetTransactionReceiptMethod} getTransactionReceiptMethod
      * @param {GetBlockByNumberMethod} getBlockByNumberMethod
      * @param {NewHeadsSubscription} newHeadsSubscription
+     * @param {TransactionPollingRate} transactionPollRate
      *
      * @constructor
      */
@@ -36,7 +37,8 @@ export default class TransactionObserver {
         blockConfirmations,
         getTransactionReceiptMethod,
         getBlockByNumberMethod,
-        newHeadsSubscription
+        newHeadsSubscription,
+        transactionPollRate
     ) {
         this.provider = provider;
         this.timeout = timeout;
@@ -44,6 +46,7 @@ export default class TransactionObserver {
         this.getTransactionReceiptMethod = getTransactionReceiptMethod;
         this.getBlockByNumberMethod = getBlockByNumberMethod;
         this.newHeadsSubscription = newHeadsSubscription;
+        this.transactionPollRate = transactionPollRate;
 
         this.blockNumbers = [];
         this.lastBlock = false;
@@ -186,7 +189,7 @@ export default class TransactionObserver {
                 clearInterval(interval);
                 this.emitError(error, false, observer);
             }
-        }, 1000);
+        }, this.transactionPollRate);
     }
 
     /**

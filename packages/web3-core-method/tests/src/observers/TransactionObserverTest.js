@@ -62,6 +62,8 @@ describe('TransactionObserverTest', () => {
         expect(transactionObserver.confirmationChecks).toEqual(0);
 
         expect(transactionObserver.interval).toEqual(false);
+
+        expect(transactionObserver.transactionPollRate).toEqual(1000);
     });
 
     it('calls observe with a socket provider and returns a transaction receipt', (done) => {
